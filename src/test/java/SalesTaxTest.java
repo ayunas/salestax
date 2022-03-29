@@ -22,5 +22,10 @@ public class SalesTaxTest {
         assertEquals(1.50,salesTax.calcTax(CD));
     }
 
+    @Test
+    void oneChocolateBar_noTax() {
+        Chocolate choco = new Chocolate(.85);
+    }
+
 
 }
