@@ -92,5 +92,48 @@ public class SalesTaxTest {
         assertEquals(expected,actual);
     }
 
+    @Test
+    void headachePills_noTax() {
+        Medicine meds = new Medicine(false,9.75);
+        HashMap<String,Double> actual = new Receipt(Arrays.asList(meds)).tabulate();
+        HashMap<String,Double> expected = new HashMap<>();
+        expected.put("Medicine",9.75);
+        expected.put("Sales Tax: ",0.0);
+        expected.put("Total: ",9.75);
+        assertEquals(expected,actual);
+    }
+
+    @Test
+    void imported_chocolate_11_25_5_percent_tax() {
+        Chocolate choco = new Chocolate(11.25,true);
+        HashMap<String,Double> actual = new Receipt(Arrays.asList(choco)).tabulate();
+        HashMap<String,Double> expected = new HashMap<>();
+        expected.put("Chocolate",11.25);
+        expected.put("Sales Tax: ",.56);
+        expected.put("Total: ",11.81);
+        assertEquals(expected,actual);
+    }
+
+    @Test
+    void importedPerfume_perfume_medicine_importedChocolate() {
+        Perfume importedPerfume = new Perfume(true,27.99);
+        Perfume perfume = new Perfume(false,18.99);
+        Medicine meds = new Medicine(false,9.75);
+        Chocolate importedChocolate = new Chocolate(11.25,true);
+        List<Product> products = Arrays.asList(importedPerfume,perfume,meds,importedChocolate);
+        HashMap<String,Double> actual = new Receipt(products).tabulate();
+        HashMap<String,Double> expected = new HashMap<>();
+        expected.put("Perfume",27.99);
+        expected.put("Perfume",18.99);
+        expected.put("Medicine",9.75);
+        expected.put("Chocolate",11.25);
+        expected.put("Sales Tax: ",6.66);
+        expected.put("Total: ",74.64);
+        assertEquals(expected,actual);
+
+
+
+    }
+
 
 }
