@@ -52,12 +52,9 @@ public class SalesTaxTest {
         expected.put("Book",12.49);
         expected.put("CD",14.99);
         expected.put("Chocolate",.85);
-        expected.put("SalesTax",1.50);
-        expected.put("Total : ", 29.83);
-//        assertEquals(expected,actual);
-        assertFalse(expected.equals(actual));
-        assertSame(expected,actual);
-
+        expected.put("Sales Tax: ",1.50);
+        expected.put("Total: ", 29.83);
+        assertEquals(expected,actual);
     }
 
     @Test
@@ -70,7 +67,29 @@ public class SalesTaxTest {
         Chocolate choc = new Chocolate(10,true);
         List<Product> chocolateList = Arrays.asList(choc);
         HashMap<String,Double> actual = new Receipt(chocolateList).tabulate();
+        assertEquals(expected,actual);
+    }
 
+    @Test
+    void importedPerfume_47_50_has_7_13_tax() {
+        HashMap<String,Double> expected = new HashMap<>();
+        expected.put("Perfume",47.50);
+        expected.put("Sales Tax: ",7.13);
+        expected.put("Total: ",54.63);
+        Perfume perfume = new Perfume(true,47.50);
+        HashMap<String,Double> actual = new Receipt(Arrays.asList(perfume)).tabulate();
+        assertEquals(expected,actual);
+    }
+
+    @Test
+    void onePerfume_is_18_99_tax_1_90() {
+        Perfume perfume = new Perfume(true,false,18.99);
+        HashMap<String,Double> actual = new Receipt(Arrays.asList(perfume)).tabulate();
+        HashMap<String,Double> expected = new HashMap<>();
+        expected.put("Perfume",18.99);
+        expected.put("Sales Tax: ", 1.90);
+        expected.put("Total: ",20.89);
+        assertEquals(expected,actual);
     }
 
 

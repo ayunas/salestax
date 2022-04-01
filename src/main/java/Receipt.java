@@ -24,7 +24,7 @@ public class Receipt {
         }
         Double subtotal = sumPrices(products);
         total = subtotal + totalTax;
-        receipt.put("Sales Tax",totalTax);
+        receipt.put("Sales Tax: ",totalTax);
         receipt.put("Total: ", Precision.round(total,2));
         return receipt;
     }
@@ -39,12 +39,17 @@ public class Receipt {
     }
 
     public double calcTax(Product product) {
-        if(product.taxable == true) {
-            double tax = product.getPrice() * .10;
-            return Precision.round(tax,2);
-        } else {
-            return 0.0;
+        double tax = 0.0;
+
+
+        if(product.imported == true) {
+            tax = product.getPrice() * .05;
         }
+
+        if(product.taxable == true) {
+            tax = tax + product.getPrice() * .10;
+        }
+        return Precision.round(tax,2);
     }
 
     @Override
