@@ -1,6 +1,6 @@
 import org.apache.commons.math3.util.Precision;
 
-import java.text.DecimalFormat;
+import java.util.List;
 
 public class SalesTax {
 
@@ -11,5 +11,9 @@ public class SalesTax {
         } else {
             return 0.0;
         }
+    }
+
+    public Receipt generateReceipt(List<Product> products) {
+        return new Receipt(products);
     }
 }
